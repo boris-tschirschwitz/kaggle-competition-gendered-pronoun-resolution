@@ -1,6 +1,6 @@
 # kaggle-competition-gendered-pronoun-resolution
 
-## Proparation
+## Preparation
 
 The `kaggle` command used to download the Kaggle data requires the local file `~/.kaggle/kaggle.json` for authentication.
 
