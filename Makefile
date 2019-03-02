@@ -3,7 +3,7 @@ SHELL := /bin/bash
 .DELETE_ON_ERROR:
 .PHONY: all pipupgrade
 
-all: kaggle env/.requirements.lastrun .git | env data data/raw
+all: kaggle env/.requirements.lastrun .git | env data data/raw data/raw/gap-coreference
 
 env:
 	python3 -m venv $@
@@ -28,6 +28,11 @@ data:
 
 data/raw: | data
 	mkdir $@
+
+# Download raw data from google-research-datasets/gap-coreference
+
+data/raw/gap-coreference: | data/raw
+	cd data/raw && git clone https://github.com/google-research-datasets/gap-coreference.git
 
 # Clean commands
 
