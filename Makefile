@@ -3,7 +3,7 @@ SHELL := /bin/bash
 .DELETE_ON_ERROR:
 .PHONY: all pipupgrade
 
-all: kaggle env/.requirements.lastrun .git | env data data/raw data/raw/gap-coreference
+all: processdata kaggle env/.requirements.lastrun .git | env data data/raw data/raw/gap-coreference
 
 env:
 	python3 -m venv $@
@@ -29,10 +29,29 @@ data:
 data/raw: | data
 	mkdir $@
 
+# Kaggle commands
+
+.PHONY: kaggle processdata
+
+kaggle: | data/raw env/.requirements.lastrun
+ifeq (, $(wildcard data/raw/test_stage_1.tsv.zip))
+	source activate && kaggle competitions download -c gendered-pronoun-resolution -p data/raw/
+endif
+
 # Download raw data from google-research-datasets/gap-coreference
 
 data/raw/gap-coreference: | data/raw
 	cd data/raw && git clone https://github.com/google-research-datasets/gap-coreference.git
+
+# Preprocess data
+data/processed: | data/raw
+	mkdir $@
+
+# unzip the test data into the processed data folder
+data/processed/test_stage_1.tsv: kaggle | data/processed
+	cd $(dir $@) && unzip ../raw/$(notdir $@).zip
+
+processdata: data/processed/test_stage_1.tsv
 
 # Clean commands
 
@@ -62,13 +81,4 @@ allbutraw := $(filter-out data/raw,$(wildcard data/*))
 processeddataclean:
 ifneq (, $(allbutraw))
 	rm -rf $(allbutraw)
-endif
-
-# Kaggle commands
-
-.PHONY: kaggle
-
-kaggle: | data/raw env/.requirements.lastrun
-ifeq (, $(wildcard data/raw/*))
-	source activate && kaggle competitions download -c gendered-pronoun-resolution -p data/raw/
 endif
