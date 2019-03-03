@@ -38,6 +38,8 @@ ifeq (, $(wildcard data/raw/test_stage_1.tsv.zip))
 	source activate && kaggle competitions download -c gendered-pronoun-resolution -p data/raw/
 endif
 
+data/raw/test_stage_1.tsv.zip: kaggle
+
 # Download raw data from google-research-datasets/gap-coreference
 
 data/raw/gap-coreference: | data/raw
@@ -48,8 +50,8 @@ data/processed: | data/raw
 	mkdir $@
 
 # unzip the test data into the processed data folder
-data/processed/test_stage_1.tsv: kaggle | data/processed
-	cd $(dir $@) && unzip ../raw/$(notdir $@).zip
+data/processed/test_stage_1.tsv: data/raw/test_stage_1.tsv.zip | data/processed
+	cd $(dir $@) && unzip $< && chmod 0644 $(notdir $@) && touch $(notdir $@)
 
 processdata: data/processed/test_stage_1.tsv
 
