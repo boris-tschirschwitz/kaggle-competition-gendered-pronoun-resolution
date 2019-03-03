@@ -1,5 +1,8 @@
 # kaggle-competition-gendered-pronoun-resolution
 
+Kaggle site: [Gendered Pronoun Resolution](https://www.kaggle.com/c/gendered-pronoun-resolution).
+After the Google AI repository is cloned, have a look at its [Readme](data/raw/gap-coreference/README.md), direct repository link: [Readme](https://github.com/google-research-datasets/gap-coreference/blob/master/README.md).
+
 ## Preparation
 
 The `kaggle` command used to download the Kaggle data requires the local file `~/.kaggle/kaggle.json` for authentication.
