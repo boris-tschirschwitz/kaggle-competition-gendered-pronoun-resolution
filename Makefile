@@ -51,7 +51,7 @@ data/processed: | data/raw
 
 # unzip the test data into the processed data folder
 data/processed/test_stage_1.tsv: data/raw/test_stage_1.tsv.zip | data/processed
-	cd $(dir $@) && unzip $< && chmod 0644 $(notdir $@) && touch $(notdir $@)
+	cd $(dir $@) && unzip ../../$< && chmod 0644 $(notdir $@) && touch $(notdir $@)
 
 processdata: data/processed/test_stage_1.tsv
 
