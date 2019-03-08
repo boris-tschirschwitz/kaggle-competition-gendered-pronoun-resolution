@@ -53,7 +53,10 @@ data/processed: | data/raw
 data/processed/test_stage_1.tsv: data/raw/test_stage_1.tsv.zip | data/processed
 	cd $(dir $@) && unzip ../../$< && chmod 0644 $(notdir $@) && touch $(notdir $@)
 
-processdata: data/processed/test_stage_1.tsv
+data/processed/gap.tsv: data/raw/gap-coreference/gap-development.tsv data/raw/gap-coreference/gap-test.tsv
+	cp $< $@ && tail -n +2 $(word 2,$^) >> $@
+
+processdata: data/processed/test_stage_1.tsv data/processed/gap.tsv
 
 # Clean commands
 
