@@ -80,6 +80,12 @@ class WordVectors:
         print('Word not found: ' + word)
         return [word, -1]
 
+    def get_vector_from_index(self, index):
+        if index == -1:
+            return [0] * self.dimensions
+        else:
+            return self.vectors[index]
+
 
 def ensure_glove_files_exist():
     if (not(os.path.isfile('./glove/glove.6B.50d.txt')) or
