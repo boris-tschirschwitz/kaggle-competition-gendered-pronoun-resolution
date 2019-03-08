@@ -6,3 +6,4 @@ activate
 .idea
 .ipynb_checkpoints
 **/.DS_Store
+.vscode
