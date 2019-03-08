@@ -9,7 +9,18 @@ class WordVectors:
 
     def init(self):
         if self.algorithm == 'glove' and ensure_glove_files_exist():
-            # TODO initialize words and vectors
+            if len(self.sorted_words)>0:
+                return True
+
+            # read words from glove file and sort them by length
+            cur_index = 0;
+            with open('glove/glove.6B.' + str(self.dimensions) + 'd.txt') as f:
+                for line in f:
+                    word, *vector = line.split()
+                    self.sorted_words.append([word, cur_index])
+                    self.vectors.append(list(map(lambda v: float(v), vector)))
+                    cur_index += 1
+            self.sorted_words.sort(key=lambda x: len(x[0]), reverse=True)
             return True
         return False
 
