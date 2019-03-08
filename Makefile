@@ -59,7 +59,10 @@ data/processed/gap.tsv: data/raw/gap-coreference/gap-development.tsv data/raw/ga
 data/processed/single_match.tsv: data/processed/gap.tsv
 	source activate && python create_single_match_data.py $< $@
 
-processdata: data/processed/test_stage_1.tsv data/processed/single_match.tsv
+data/processed/single_with_types.tsv: data/processed/single_match.tsv
+	source activate && python add_pronoun_types.py $< $@
+
+processdata: data/processed/test_stage_1.tsv data/processed/single_with_types.tsv
 
 # Clean commands
 
