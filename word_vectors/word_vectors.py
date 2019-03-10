@@ -86,6 +86,9 @@ class WordVectors:
         else:
             return self.vectors[index]
 
+    def get_vector_columns(self):
+        return list(map(lambda i: 'v' + str(i), range(self.dimensions)))
+
 
 def ensure_glove_files_exist():
     if (not(os.path.isfile('./glove/glove.6B.50d.txt')) or
