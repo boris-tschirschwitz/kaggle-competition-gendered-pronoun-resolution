@@ -75,7 +75,8 @@ class WordVectors:
             return self.get_first_unknow_word(text, LETTER_DIGIT_SPACE_REGEX)
 
     def get_first_unknow_word(self, text, next_token_regex):
-        next_token_position = next_token_regex.search(text).start()
+        search_text = text[1:]
+        next_token_position = next_token_regex.search(search_text).start() + 1
         word = text[:next_token_position]
         print('Word not found: ' + word)
         return [word, -1]
