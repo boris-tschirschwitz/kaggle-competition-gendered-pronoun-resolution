@@ -1,3 +1,6 @@
+import os.path
+import pandas as pd
+
 class CnnInput:
     def __init__(self, word_vectors):
         self.word_vectors = word_vectors
@@ -31,6 +34,25 @@ class CnnInput:
             row = [text_annotation, a_annotation, b_annotation] + self.word_vectors.get_vector_from_index(word_vector_index)
             input.append(row)
         return input
+
+    def input_to_csv(self, index, row):
+        row_values = row.values
+        id = row_values[0]
+        filename = './cnn_input/' + id + '.csv'
+        if os.path.isfile(filename):
+            return
+        text = row_values[1]
+        pronoun = row_values[2]
+        pronoun_offset = row_values[3]
+        a = row_values[4]
+        a_offset = row_values[5]
+        b = row_values[7]
+        b_offset = row_values[8]
+        input = self.prepare_input(text, pronoun, pronoun_offset, a, a_offset, b, b_offset)
+        columns = ['T', 'A', 'B'] + self.word_vectors.get_vector_columns()
+        input_df = pd.DataFrame.from_records(input, columns=columns)
+        input_df.to_csv(filename)
+        print('Writing file: ' + filename)
 
 
 def get_token_annotations(tokens, t, t_offset):
