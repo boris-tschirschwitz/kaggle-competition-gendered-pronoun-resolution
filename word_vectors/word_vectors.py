@@ -4,7 +4,7 @@ import re
 LETTER_REGEX = re.compile(r'[a-zA-Z]')
 NON_LETTER_REGEX = re.compile(r'[^a-zA-Z]')
 DIGIT_REGEX = re.compile(r'[0-9]')
-NON_DIGIT_REGEX = re.compile(r'[^a-zA-Z]')
+NON_DIGIT_REGEX = re.compile(r'[^0-9]')
 LETTER_DIGIT_SPACE_REGEX = re.compile(r'[a-zA-Z0-9\s]');
 
 class WordVectors:
