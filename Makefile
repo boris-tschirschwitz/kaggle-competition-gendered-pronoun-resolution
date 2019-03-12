@@ -56,13 +56,13 @@ data/processed/test_stage_1.tsv: data/raw/test_stage_1.tsv.zip | data/processed
 data/processed/gap.tsv: data/raw/gap-coreference/gap-development.tsv data/raw/gap-coreference/gap-test.tsv
 	cp $< $@ && tail -n +2 $(word 2,$^) >> $@
 
-data/processed/single_match.tsv: data/processed/gap.tsv create_single_match_data.py
-	source activate && python create_single_match_data.py $< $@
-
-data/processed/single_with_types.tsv: data/processed/single_match.tsv
+data/processed/gap_with_types.tsv: data/processed/gap.tsv add_pronoun_types.py
 	source activate && python add_pronoun_types.py $< $@
 
-processdata: data/processed/test_stage_1.tsv data/processed/single_with_types.tsv
+data/processed/single_match_with_types.tsv: data/processed/gap_with_types.tsv create_single_match_data.py
+	source activate && python create_single_match_data.py $< $@
+
+processdata: data/processed/test_stage_1.tsv data/processed/single_match_with_types.tsv
 
 # Clean commands
 
