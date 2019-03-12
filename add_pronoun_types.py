@@ -31,4 +31,4 @@ if __name__=="__main__":
     gap_df = pd.read_csv(args['gap_tsv'], sep='\t')
 
     new_df = add_pronoun_types(gap_df)
-    new_df.to_csv(args['outfile'], sep='\t')
+    new_df.to_csv(args['outfile'], sep='\t', index=False)

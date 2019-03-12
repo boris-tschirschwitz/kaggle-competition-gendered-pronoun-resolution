@@ -21,4 +21,4 @@ if __name__=="__main__":
     gap_df = pd.read_csv(args['gap_tsv'], sep='\t')
 
     single_match_df = create_single_match_data(gap_df)
-    single_match_df.to_csv(args['outfile'], sep='\t')
+    single_match_df.to_csv(args['outfile'], sep='\t', index=False)
