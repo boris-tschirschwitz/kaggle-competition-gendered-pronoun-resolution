@@ -1,11 +1,12 @@
 import pandas as pd
 
 def create_single_match_data(gap_df):
-    a_only = gap_df.drop(["B", "B-offset", "B-coref"], axis=1)
-    part1 = a_only.rename(columns={"A": "Name", "A-offset": "Name-offset", "A-coref": "Coref"})
-    b_only = gap_df.drop(["A", "A-offset", "A-coref"], axis=1)
-    part2 = b_only.rename(columns={"B": "Name", "B-offset": "Name-offset", "B-coref": "Coref"})
-    full_df = pd.concat([part1, part2])
+    part1 = gap_df.rename(columns={"A": "Name", "A-offset": "Name-offset", "A-coref": "Coref",
+                                   "B": "Other-name", "B-offset": "Other-offset", "B-coref": "Other-coref"})
+    part2 = gap_df.rename(columns={"B": "Name", "B-offset": "Name-offset", "B-coref": "Coref",
+                                   "A": "Other-name", "A-offset": "Other-offset", "A-coref": "Other-coref"})
+
+    full_df = pd.concat([part1, part2], sort=False)
 
     return full_df
 
