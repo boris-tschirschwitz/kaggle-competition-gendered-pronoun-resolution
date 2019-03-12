@@ -5,16 +5,15 @@ subjective = ['she', 'he']
 objective = ['her', 'him']
 
 def gender(row):
-    if row['Pronoun'] in female: return 'F'
+    if row['Pronoun'].lower() in female: return 'F'
     else: return 'M'
 
 def pronoun_type(row):
-    if row['Pronoun'] in subjective: return 'Subjective'
-    elif row['Pronoun'] in objective: return 'Objective'
+    if row['Pronoun'].lower() in subjective: return 'Subjective'
+    elif row['Pronoun'].lower() in objective: return 'Objective'
     else: return 'Possessive'
 
 def add_pronoun_types(gap_df):
-    gap_df['Pronoun'] = gap_df['Pronoun'].str.lower()
     gap_df['Pronoun-gender'] = gap_df.apply(gender, axis=1)
     gap_df['Pronoun-type'] = gap_df.apply(pronoun_type, axis=1)
 
