@@ -53,6 +53,10 @@ data/processed: | data/raw
 data/processed/test_stage_1.tsv: data/raw/test_stage_1.tsv.zip | data/processed
 	cd $(dir $@) && unzip ../../$< && chmod 0644 $(notdir $@) && touch $(notdir $@)
 
+data/raw/gap-coreference/gap-development.tsv: | data/raw/gap-coreference
+
+data/raw/gap-coreference/gap-test.tsv: | data/raw/gap-coreference
+
 data/processed/gap.tsv: data/raw/gap-coreference/gap-development.tsv data/raw/gap-coreference/gap-test.tsv
 	cp $< $@ && tail -n +2 $(word 2,$^) >> $@
 
