@@ -1,21 +1,28 @@
 import pandas as pd
 
 female = ['she', 'her', 'hers']
-subjective = ['she', 'he']
-objective = ['her', 'him']
+subjective_pronouns = ['she', 'he']
+objective_pronouns = ['her', 'him']
+possessive_pronouns = ['her', 'hers', 'his']
 
 def gender(row):
     if row['Pronoun'].lower() in female: return 'F'
     else: return 'M'
 
-def pronoun_type(row):
-    if row['Pronoun'].lower() in subjective: return 'Subjective'
-    elif row['Pronoun'].lower() in objective: return 'Objective'
-    else: return 'Possessive'
+def objective(row):
+    return row['Pronoun'].lower() in objective_pronouns
+
+def subjective(row):
+    return row['Pronoun'].lower() in subjective_pronouns
+
+def possessive(row):
+    return row['Pronoun'].lower() in possessive_pronouns
 
 def add_pronoun_types(gap_df):
     gap_df['Pronoun-gender'] = gap_df.apply(gender, axis=1)
-    gap_df['Pronoun-type'] = gap_df.apply(pronoun_type, axis=1)
+    gap_df['Pronoun-Objective'] = gap_df.apply(objective, axis=1)
+    gap_df['Pronoun-Subjective'] = gap_df.apply(subjective, axis=1)
+    gap_df['Pronoun-Possessive'] = gap_df.apply(possessive, axis=1)
 
     return gap_df
 
