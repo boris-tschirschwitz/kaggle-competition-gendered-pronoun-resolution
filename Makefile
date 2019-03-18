@@ -45,6 +45,9 @@ data/raw/test_stage_1.tsv.zip: kaggle
 data/raw/gap-coreference: | data/raw
 	cd data/raw && git clone https://github.com/google-research-datasets/gap-coreference.git
 
+data/raw/glove.6B.zip: | data/raw
+	curl -o $@ https://nlp.stanford.edu/data/glove.6B.zip
+
 # Preprocess data
 data/processed: | data/raw
 	mkdir $@
@@ -52,6 +55,15 @@ data/processed: | data/raw
 # unzip the test data into the processed data folder
 data/processed/test_stage_1.tsv: data/raw/test_stage_1.tsv.zip | data/processed
 	cd $(dir $@) && unzip ../../$< && chmod 0644 $(notdir $@) && touch $(notdir $@)
+
+data/processed/glove: | data/processed
+	mkdir $@
+
+glovefiles := data/processed/glove/glove.6B.50d.txt data/processed/glove/glove.6B.100d.txt data/processed/glove/glove.6B.200d.txt data/processed/glove/glove.6B.300d.txt
+$(glovefiles): data/raw/glove.6B.zip | data/processed/glove
+	cd $(dir $@) && unzip ../../../$< && chmod 0644 * && touch *
+
+processdata: data/processed/test_stage_1.tsv $(glovefiles)
 
 data/raw/gap-coreference/gap-development.tsv: | data/raw/gap-coreference
 
