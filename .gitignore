@@ -8,3 +8,4 @@ activate
 **/.DS_Store
 word_vectors/glove/glove.6B.*d.txt
 word_vectors/cnn_input/*.csv
+.vscode
