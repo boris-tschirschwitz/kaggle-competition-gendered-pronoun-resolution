@@ -3,3 +3,6 @@ tornado==5.1.1
 jupyter
 pandas
 seaborn
+tensorflow
+keras
+mlflow
